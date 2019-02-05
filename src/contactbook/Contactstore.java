@@ -21,18 +21,8 @@ public class Contactstore {
         this.contactId = 0;
     }
     
-    void addContact()//String phoneNo, String firstName, String lastName)
+    void addContact(String phoneNo, String firstName, String lastName)
     {   
-        System.out.println("Add new record: ");
-        System.out.print("First Name:");
-        Scanner fN = new Scanner(System.in);
-        String firstName = fN.nextLine().trim();
-        System.out.print("Last name:");
-        Scanner lN = new Scanner(System.in);
-        String lastName = lN.nextLine().trim();
-        System.out.print("Phone Number:");
-        Scanner pN = new Scanner(System.in);
-        String phoneNo = pN.nextLine().trim();
         Contact c = new Contact(contactId, firstName,lastName, phoneNo);///variable
         this.contacts.add(c);
         this.contactId++;

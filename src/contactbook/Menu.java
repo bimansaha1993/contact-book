@@ -31,7 +31,17 @@ public class Menu {
         {
             case 1:
             {
-                cs.addContact();
+                System.out.println("Add new record: ");
+                System.out.print("First Name:");
+                Scanner fN = new Scanner(System.in);
+                String firstName = fN.nextLine().trim();
+                System.out.print("Last name:");
+                Scanner lN = new Scanner(System.in);
+                String lastName = lN.nextLine().trim();
+                System.out.print("Phone Number:");
+                Scanner pN = new Scanner(System.in);
+                String phoneNo = pN.nextLine().trim();
+                cs.addContact(phoneNo, firstName, lastName);
                 break;
             }
             case 2:
