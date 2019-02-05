@@ -4,6 +4,7 @@
  */
 package contactbook;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -19,47 +20,85 @@ public class Menu {
         System.out.println("4. Show all contacts");
         System.out.println("5. Delete contact");
         System.out.println("6. Exit");
-        System.out.println("Enter your choice: ");
     }
 
-    //Contact c=new Contact();
-    void selectedMenu(int c)
+    Contactstore cs = new Contactstore();
+    boolean control=true;
+
+    void selectedMenu(int choice)
     {
-        switch(c)
+        switch(choice)
         {
-            case '1':
+            case 1:
             {
-                System.out.println("Add new record: ");
-                System.out.println("First Name:");
-                Scanner firstname=new Scanner(System.in);
-                System.out.println("Last name:");
-                Scanner lasttname=new Scanner(System.in);
-                System.out.println("Phone Nmber:");
-                Scanner phoneno=new Scanner(System.in);
+                cs.addContact();
                 break;
             }
-            case '2':
+            case 2:
             {
-                System.out.println("Search by name");
-                
+                System.out.print("Search by name(first/last/full):");
+                Scanner sn = new Scanner(System.in);
+                String serachterm = sn.nextLine();
+                ArrayList<Contact> filteredName = cs.searchByName(serachterm);
+                for(Contact c : filteredName)
+                {
+                    System.out.println(c.getId()+" "+c.getFullname()+" "+c.getPhoneNo());
+                }       
                 break;
             }
-            case '3':
+            case 3:
             {
-                System.out.println("Search by number");
+                System.out.print("Search by number(11 Digit):");
+                Scanner sn = new Scanner(System.in);
+                String serachterm = sn.nextLine();
+                ArrayList<Contact> filteredNumber = cs.searchByNumber(serachterm);
+                for(Contact c : filteredNumber)
+                {
+                    System.out.println(c.getId()+" "+c.getFullname()+" "+c.getPhoneNo());
+                }
+
                 break;
             }
-            case '4':
+            case 4:
             {
-                System.out.println("show all contacts");
+                System.out.println("All contacts");
+                ArrayList<Contact> allContacts = cs.getAllContacts();
+                for(Contact c : allContacts)
+                {
+                    System.out.println(c.getId()+" "+c.getFullname()+" "+c.getPhoneNo());
+                }
                 break;
             }
-            case '5':
+            case 5:
             {
-                System.out.println("delete contact");
+                System.out.println("Delete Contact");
+                System.out.println("1.Delete by name");
+                System.out.println("2.Delete by phone number.");
+                System.out.println("3.Back");
+                System.out.print("Enter your choice:");
+                Scanner input=new Scanner(System.in);
+                int deleteChoice=input.nextInt();
+                switch(deleteChoice)
+                {
+                    case 1:
+                    {
+                        
+                    }
+                    case 2:
+                    {
+                        
+                    }
+                    case 3:
+                    {
+                        
+                    }
+                    default:
+                        System.out.println("your selected menu is not valid");
+                }
+
                 break;
             }
-            case '6':
+            case 6:
             {
                 System.out.println("Have a nice day.....");
                 break;

@@ -5,6 +5,7 @@
 package contactbook;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -20,9 +21,18 @@ public class Contactstore {
         this.contactId = 0;
     }
     
-    void addContact(String phoneNo, String firstName, String lastName)
-    {
-        //contacts[contact_cnt++]=Addcontact(int id,String first_name,String last_name,String phone_no);
+    void addContact()//String phoneNo, String firstName, String lastName)
+    {   
+        System.out.println("Add new record: ");
+        System.out.print("First Name:");
+        Scanner fN = new Scanner(System.in);
+        String firstName = fN.nextLine().trim();
+        System.out.print("Last name:");
+        Scanner lN = new Scanner(System.in);
+        String lastName = lN.nextLine().trim();
+        System.out.print("Phone Number:");
+        Scanner pN = new Scanner(System.in);
+        String phoneNo = pN.nextLine().trim();
         Contact c = new Contact(contactId, firstName,lastName, phoneNo);///variable
         this.contacts.add(c);
         this.contactId++;
@@ -56,5 +66,34 @@ public class Contactstore {
             }
         }
         return filteredContacts;
+    }
+    
+     ArrayList<Contact> searchByName(String searchTerm)
+    {
+        ArrayList<Contact> filteredName=new ArrayList<Contact>();
+        for(Contact c : contacts){
+            if(c.getFullname().toLowerCase().contains(searchTerm.toLowerCase())){
+                filteredName.add(c);
+            }
+        }
+        return filteredName;
+    }
+    
+    ArrayList<Contact> searchByNumber(String searchTerm)
+    {
+        ArrayList<Contact> filteredNumber=new ArrayList<Contact>();
+        for(Contact c : contacts){
+            if( c.getPhoneNo().contains(searchTerm)){
+                filteredNumber.add(c);
+            }
+        }
+        return filteredNumber;
+    }
+    
+    void deleteContactByName(String name) {
+        ArrayList<Contact> filteredContacts = searchByName(name);
+        for(Contact c : filteredContacts) {
+            contacts.remove(c);
+        }
     }
 }
