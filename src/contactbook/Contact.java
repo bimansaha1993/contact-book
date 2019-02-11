@@ -14,11 +14,6 @@ public class Contact {
     private String lastName;
     private String phoneNo;
 
-    Contact()
-    {
-
-    }
-
     Contact(int id, String firstName, String lastName, String phoneNo)
     {
         this.id = id;
@@ -30,7 +25,7 @@ public class Contact {
     int getId(){
         return this.id;
     }
-    
+   
     String getFirstName(){
         return this.firstName;
     }
@@ -39,7 +34,7 @@ public class Contact {
         return this.lastName;
     }
 
-    String getFullname(){
+    String getFullName(){
         return this.firstName + " " + this.lastName;
     }
 

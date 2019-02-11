@@ -5,30 +5,36 @@
 package contactbook;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
+import java.util.Iterator;
 /**
  *
  * @author User
  */
 public class Contactstore {
-    
-    private ArrayList <Contact> contacts;
-    private int contactId;
+//    private ArrayList <Contact> contacts;
+//    private int contactId;
+    private String filepath;
     
     Contactstore() {
-        this.contacts = new ArrayList<Contact>();
-        this.contactId = 0;
+        this.filepath = "./CSV/contactbook.csv";
+//        this.contacts = CSVHelper.readFromCSV(filepath)
+//        this.contactId = 1;
+    }
+    
+    void clearStore() {
+        CSVHelper.clearCSV(this.filepath);
     }
     
     void addContact(String phoneNo, String firstName, String lastName)
     {   
-        Contact c = new Contact(contactId, firstName,lastName, phoneNo);///variable
-        this.contacts.add(c);
-        this.contactId++;
+        ArrayList<Contact> contacts = CSVHelper.readFromCSV(this.filepath);
+        int id = contacts.size() > 0 ? contacts.get(contacts.size()-1).getId() + 1 : 1;
+        Contact c = new Contact(id, firstName,lastName, phoneNo);///variable
+        contacts.add(c);
+        CSVHelper.writeToCSV(this.filepath, contacts);
     }
 
-    Contact getContactById(int id)
+    /*Contact getContactById(int id)
     {
         for(Contact c : contacts)
         {
@@ -38,19 +44,21 @@ public class Contactstore {
             }
         }
         return null;
-    }
+    }*/
 
     ArrayList<Contact> getAllContacts()
     {
-        return this.contacts;
+        ArrayList<Contact> contacts = CSVHelper.readFromCSV(this.filepath);
+        return contacts;
     }
 
     ArrayList<Contact> searchContact(String searchTerm)
     {
         ArrayList<Contact> filteredContacts = new ArrayList<Contact>();
+        ArrayList<Contact> contacts = CSVHelper.readFromCSV(this.filepath);
         for(Contact c : contacts)
         {
-            if(searchTerm == c.getFullname() || searchTerm==c.getPhoneNo() || searchTerm==c.getFirstName() || searchTerm==c.getLastName())
+            if(c.getFullName().toLowerCase().contains(searchTerm.toLowerCase()) || c.getPhoneNo().contains(searchTerm))
             {
                 filteredContacts.add(c);
             }
@@ -58,11 +66,11 @@ public class Contactstore {
         return filteredContacts;
     }
     
-     ArrayList<Contact> searchByName(String searchTerm)
+     /*ArrayList<Contact> searchByName(String searchTerm)
     {
         ArrayList<Contact> filteredName=new ArrayList<Contact>();
         for(Contact c : contacts){
-            if(c.getFullname().toLowerCase().contains(searchTerm.toLowerCase())){
+            if(c.getFullName().toLowerCase().contains(searchTerm.toLowerCase())){
                 filteredName.add(c);
             }
         }
@@ -78,12 +86,27 @@ public class Contactstore {
             }
         }
         return filteredNumber;
+    }*/
+    
+    void deleteContactById(int id) {
+        ArrayList<Contact> contacts = CSVHelper.readFromCSV(this.filepath);
+        Iterator cIterator = contacts.iterator();
+        while (cIterator.hasNext()) {
+            Contact c = (Contact) cIterator.next();
+            if(c.getId() == id)
+            {
+                cIterator.remove();
+                break;
+            }
+        }
+        CSVHelper.writeToCSV(this.filepath, contacts);
     }
     
-    void deleteContactByName(String name) {
-        ArrayList<Contact> filteredContacts = searchByName(name);
+    void deleteContact(String deleteterm) {
+       
+        ArrayList<Contact> filteredContacts = searchContact(deleteterm);
         for(Contact c : filteredContacts) {
-            contacts.remove(c);
+            deleteContactById(c.getId());
         }
     }
 }
